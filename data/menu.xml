@@ -148,7 +148,6 @@ self.session.openWithCallback(msgClosed, EpgSaveMsg)
 		<menu weight="30" level="1" text="Common interface" entryID="cam_setup" requires="CommonInterface">
 			<id val="cam" />
 			<item weight="0" level="1" text="Common Interface" entryID="ci_setup"><screen module="Ci" screen="CiSelection" /></item>
-			<item weight="5" level="1" text="Common interface PIN Setup" entryID="ci_setup"><screen module="Ci" screen="CiDefaultPinSetup" /></item>
 			<item weight="5" level="1" text="CIHelper Setup" entryID="ci_setup" requires="CIHelper"><screen module="Ci" screen="CIHelper" /></item>
 		</menu>
 
@@ -225,16 +224,9 @@ self.session.openWithCallback(msgClosed, FactoryReset)
 			<code>
 from Screens.Standby import TryQuitMainloop
 from Screens.MessageBox import MessageBox
-recordings = self.session.nav.getRecordings()
+recordings = self.session.nav.getRecordingsCheckBeforeActivateDeepStandby()
 if recordings:
-	lastrecordEnd = 0
-	for timer in self.session.nav.RecordTimer.timer_list:
-		if lastrecordEnd == 0 or lastrecordEnd >= timer.begin:
-			print "Set after-event for recording %s to DEEP-STANDBY." % timer.name
-			timer.afterEvent = 2
-			if timer.end > lastrecordEnd:
-				lastrecordEnd = timer.end + 900
-	self.session.openWithCallback(self.gotoStandby,MessageBox,_("PowerOff while Recording in progress!\nEntering standby, after recording the box will shutdown."), type = MessageBox.TYPE_INFO, timeout = 10)
+	self.session.openWithCallback(self.gotoStandby,MessageBox,_("Recording(s) are in progress or coming up in few seconds!\nEntering standby, after recording the box will shutdown."), type = MessageBox.TYPE_INFO, close_on_any_key = True, timeout = 10)
 else:
 	self.session.open(TryQuitMainloop, 1)
 </code>
@@ -244,16 +236,9 @@ else:
 			<code>
 from Screens.Standby import TryQuitMainloop
 from Screens.MessageBox import MessageBox
-recordings = self.session.nav.getRecordings()
+recordings = self.session.nav.getRecordingsCheckBeforeActivateDeepStandby()
 if recordings:
-	lastrecordEnd = 0
-	for timer in self.session.nav.RecordTimer.timer_list:
-		if lastrecordEnd == 0 or lastrecordEnd >= timer.begin:
-			print "Set after-event for recording %s to DEEP-STANDBY." % timer.name
-			timer.afterEvent = 2
-			if timer.end > lastrecordEnd:
-				lastrecordEnd = timer.end + 900
-	self.session.openWithCallback(self.gotoStandby,MessageBox,_("PowerOff while Recording in progress!\nEntering standby, after recording the box will shutdown."), type = MessageBox.TYPE_INFO, timeout = 10)
+	self.session.openWithCallback(self.gotoStandby,MessageBox,_("Recording(s) are in progress or coming up in few seconds!\nEntering standby, after recording the box will shutdown."), type = MessageBox.TYPE_INFO, close_on_any_key = True, timeout = 10)
 else:
 	self.session.open(TryQuitMainloop, 45)
 </code>

@@ -299,10 +299,12 @@ public:
 		dxNoDVB=4,  // dont use PMT for this service ( use cached pids )
 		dxHoldName=8,
 		dxNewFound=64,
+		dxIsDedicated3D=128,
 	};
 
 	bool usePMT() const { return !(m_flags & dxNoDVB); }
 	bool isHidden() const { return m_flags & dxDontshow; }
+	bool isDedicated3D() const { return m_flags & dxIsDedicated3D; }
 
 	CAID_LIST m_ca;
 
@@ -403,8 +405,10 @@ class eDVBFrontendParametersATSC;
 class iDVBFrontendParameters: public iObject
 {
 #ifdef SWIG
+public:
 	iDVBFrontendParameters();
 	~iDVBFrontendParameters();
+private:
 #endif
 public:
 	enum { flagOnlyFree = 1 };
@@ -515,12 +519,14 @@ public:
 #ifndef SWIG
 	virtual RESULT setSEC(iDVBSatelliteEquipmentControl *sec)=0;
 	virtual RESULT setSecSequence(eSecCommandList &list)=0;
+	virtual RESULT setSecSequence(eSecCommandList &list, iDVBFrontend *fe)=0;
 #endif
 	virtual int readFrontendData(int type)=0;
 	virtual void getFrontendStatus(ePtr<iDVBFrontendStatus> &dest)=0;
 	virtual void getTransponderData(ePtr<iDVBTransponderData> &dest, bool original)=0;
 	virtual void getFrontendData(ePtr<iDVBFrontendData> &dest)=0;
 #ifndef SWIG
+	virtual int getDVBID() = 0;
 	virtual RESULT getData(int num, long &data)=0;
 	virtual RESULT setData(int num, long val)=0;
 		/* 0 means: not compatible. other values are a priority. */

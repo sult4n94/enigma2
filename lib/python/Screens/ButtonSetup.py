@@ -41,9 +41,12 @@ ButtonSetupKeys = [	(_("Red"), "red", ""),
 	(_("Help"), "displayHelp", ""),
 	(_("Help long"), "displayHelp_long", ""),
 	(_("Subtitle"), "subtitle", ""),
+	(_("Subtitle long"), "subtitle_long", ""),
 	(_("Menu"), "mainMenu", ""),
-	(_("List/Fav/PVR"), "list", ""),
-	(_("List/Fav/PVR long"), "list_long", ""),
+	(_("List/Fav"), "list", ""),
+	(_("List/Fav long"), "list_long", ""),
+	(_("PVR"), "pvr", ""),
+	(_("PVR long"), "pvr_long", ""),
 	(_("Favorites"), "favorites", ""),
 	(_("Favorites long"), "favorites_long", ""),
 	(_("File"), "file", ""),
@@ -207,6 +210,7 @@ def getButtonSetupFunctions():
 	ButtonSetupFunctions.append((_("Subtitles Settings"), "Setup/subtitlesetup", "Setup"))
 	ButtonSetupFunctions.append((_("Language"), "Module/Screens.LanguageSelection/LanguageSelection", "Setup"))
 	ButtonSetupFunctions.append((_("OscamInfo Mainmenu"), "Module/Screens.OScamInfo/OscamInfoMenu", "Plugins"))
+	ButtonSetupFunctions.append((_("CCcamInfo Mainmenu"), "Module/Screens.CCcamInfo/CCcamInfoMain", "Plugins"))
 	if os.path.isdir("/etc/ppanels"):
 		for x in [x for x in os.listdir("/etc/ppanels") if x.endswith(".xml")]:
 			x = x[:-4]
@@ -507,7 +511,7 @@ class InfoBarButtonSetup():
 				return self.execButtonSetup(selected[0])
 			else:
 				key = tuple(x[0] for x in ButtonSetupKeys if x[1] == key)[0]
-				self.session.openWithCallback(self.execButtonSetup, ChoiceBox, _("ButtonSetup") + " " + key, selected)
+				self.session.openWithCallback(self.execButtonSetup, ChoiceBox, (_("Hotkey")) + "  " + key, selected)
 
 	def execButtonSetup(self, selected):
 		if selected:

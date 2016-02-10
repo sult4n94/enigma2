@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: tuxbox-enigma 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-11-05 14:38+0000\n"
-"PO-Revision-Date: 2015-12-06 21:56+0100\n"
+"PO-Revision-Date: 2016-01-25 22:12+0100\n"
 "Last-Translator: mike99 <mike99@mail.to>\n"
 "Language-Team: openATV\n"
 "Language: de\n"
@@ -1939,6 +1939,9 @@ msgstr "Standard"
 msgid "Reception Settings"
 msgstr "Empfangseinstellungen"
 
+msgid "Reception lists"
+msgstr "Empfangslisten"
+
 msgid "Configure interface"
 msgstr "Netzwerkkarte konfigurieren"
 
@@ -3340,6 +3343,9 @@ msgstr "Experimentell"
 msgid "Expert"
 msgstr "Experte"
 
+msgid "Extended"
+msgstr "Erweitert"
+
 #
 msgid "Extended Networksetup Plugin..."
 msgstr "Plugin für erweiterte Netzwerkeinstellungen..."
@@ -3914,15 +3920,15 @@ msgstr "IMDb Suche"
 msgid "IP address"
 msgstr "IP-Adresse"
 
-#: About.py:374:383 :392 :401
+#: About.py:374:383:392:401
 msgid "IP:"
 msgstr "IP:\t"
 
-#: About.py:376:385 :394 :403
+#: About.py:376:385:394:403
 msgid "Netmask:"
 msgstr "Netmask:\t"
 
-#: About.py:378:387 :396 :405
+#: About.py:378:387:396:405
 msgid "MAC:"
 msgstr "MAC:\t"
 
@@ -4133,9 +4139,13 @@ msgstr "Erweiterungen installieren..."
 msgid "Install local extension"
 msgstr "Lokale Erweiterung installieren"
 
-#
+#: SoftwareManager/plugin.py
 msgid "Install or remove finished."
 msgstr "Installation oder Deinstallation beendet."
+
+#: SoftwareManager/plugin.py
+msgid "Do you want to reboot your receiver?"
+msgstr "Wollen Sie jetzt neu starten?"
 
 msgid "Install picons on"
 msgstr "Picons installieren auf"
@@ -4973,6 +4983,10 @@ msgstr "Netzwerkassistent"
 
 msgid "Network name (SSID)"
 msgstr "Netzwerkname (SSID)"
+
+#: NetworkSetup.py:578
+msgid "Enable Wake On LAN"
+msgstr "Aktiviere Wake On LAN"
 
 #
 msgid "New"
@@ -8131,6 +8145,14 @@ msgid "Are you sure to remove all %d.%d%s%s services?"
 msgstr "Sind Sie sicher, dass %d.%d%s%s entfernt werden soll?"
 
 #
+msgid "Mark service as dedicated 3D service"
+msgstr "Als 3D Kanal markieren"
+
+#
+msgid "Unmark service as dedicated 3D service"
+msgstr "3D Markierung entfernen"
+
+#
 msgid "Test DiSEqC settings"
 msgstr "Teste DiSEqC-Einstellungen"
 
@@ -8255,7 +8277,7 @@ msgid "The PIN code has been changed successfully."
 msgstr "Der PIN-Code wurde erfolgreich geändert."
 
 msgid "The PIN codes you entered are different."
-msgstr "Die eingegebenen PIN-Codes sind unterschiedlich."
+msgstr "Die eingegebenen PIN-Codes unterscheiden sich."
 
 #
 msgid ""
@@ -10533,6 +10555,10 @@ msgstr "Gelb lang"
 #: ButtonSetup.py
 msgid "Blue long"
 msgstr "Blau lang"
+
+#: ButtonSetup.py
+msgid "Subtitle long"
+msgstr "Untertitel lang"
 
 #
 #, python-format
@@ -14694,12 +14720,11 @@ msgstr "Rechts vom Servicenamen"
 
 #
 msgid ""
-"PowerOff while Recording in progress!\n"
+"Recording(s) are in progress or coming up in few seconds!\n"
 "Entering standby, after recording the box will shutdown."
 msgstr ""
-"Es läuft noch eine Aufnahme, Receiver wird bis zum Ende der\n"
-"\n"
-"Aufnahme in den Stby versetzt und danach heruntergefahren."
+"Zurzeit ist eine/sind Aufnahmen aktiv oder starten gleich!\n"
+"Der Receiver wird jetzt in den Standby versetzt und am Ende der Aufnahme(n) heruntergefahren."
 
 # boot-up action
 msgid "Boot-up action"
@@ -15588,6 +15613,10 @@ msgstr "Aus-Taste lang"
 msgid "Context"
 msgstr "Kontext"
 
+#: ButtonSetup.py
+msgid "Context long"
+msgstr "Kontext lang"
+
 msgid "F1/F3"
 msgstr ""
 
@@ -16126,7 +16155,7 @@ msgstr ""
 
 #: ButtonSetup.py
 msgid "Hotkey Setup for"
-msgstr "Hotkey-Setup für"
+msgstr "Hotkey-Einstellung für"
 
 #: ButtonSetup.py
 msgid "are you sure to cancel all changes"
@@ -16917,3 +16946,125 @@ msgstr "Zoom von links"
 
 msgid "Zoom from right"
 msgstr "Zoom von rechts"
+
+#: plugin.py:195
+msgid "Show default backup files"
+msgstr "Standardliste gesicherter Dateien zeigen"
+
+#: plugin.py:196
+msgid "Select additional backup files"
+msgstr "Zusätzlich zu sichernde Dateien wählen"
+
+#: plugin.py:197
+msgid "Select excluded backup files"
+msgstr "Nicht zu sichernde Dateien wählen"
+
+#: plugin.py:347
+msgid "Default files/folders to backup"
+msgstr "Standardliste gesicherter Dateien"
+
+#: plugin.py:349
+msgid "Additional files/folders to backup"
+msgstr "Zusätzlich zu sichernde Dateien"
+
+#: plugin.py:351
+msgid "Files/folders to exclude from backup"
+msgstr "Nicht zu sichernde Dateien"
+
+#: plugin.py:195
+msgid "Show files backed up by default"
+msgstr "Zeigt Dateien, die grundsätzlich gesichert werden"
+
+#: plugin.py:195
+msgid "Select additional files to backup"
+msgstr "Dateien wählen, die zusätzlich gesichert werden"
+
+#: plugin.py:195
+msgid "Select files to exclude from backup"
+msgstr "Dateien wählen, die ausgeschlossen werden"
+
+#: QuickMenu.py:340
+msgid "Here you can browse (but not modify) the files that are added to the backupfile by default (E2-setup, channels, network)."
+msgstr "Hier können die Dateien durchsucht (aber nicht verändert) werden, die standardmäßig gesichert werden (E2-Einstellungen, Kanäle, Netzwerk)."
+
+#: QuickMenu.py:341
+msgid "Here you can specify additional files that should be added to the backup file."
+msgstr "Hier kann festegelegt werden, welche Dateien zusätzlich zu denen der Standardliste gesichert werden."
+
+#: QuickMenu.py:342
+msgid "Here you can select which files should be excluded from the backup."
+msgstr "Hier kann festegelegt werden, welche Dateien aus der Standardliste von der Sicherung ausgeschlossen werden sollen."
+
+#: BackupRestore.py:243
+msgid ""
+"The default backup selection cannot be changed.\n"
+"Please use the 'additional' and 'excluded' backup selection."
+msgstr ""
+"Die Standardliste der zu sichernden Dateien kann nicht verändert werden.\n"
+"Bitte die 'Zusätze' und 'Ausschlüsse' verwenden."
+
+#: CutListEditor/plugin.py:87
+msgid "execute cuts (requires MovieCut plugin)"
+msgstr "Filmschnitt ausführen (benötigt MovieCut Plugin)"
+
+#: CutListEditor/plugin.py
+msgid "Enable intro screen"
+msgstr "Begrüßungsbildschirm aktivieren"
+
+#: CutListEditor/plugin.py
+msgid "Disable intro screen"
+msgstr "Begrüßungsbildschirm abschalten"
+
+msgid "Add bouquet services"
+msgstr "Fav-Sender +"
+
+msgid "The PIN code has been saved successfully."
+msgstr "Die PIN wurde erfolgreich gespeichert."
+
+msgid "Reenter PIN"
+msgstr "PIN-Eingabe wiederholen"
+
+msgid "Enter PIN"
+msgstr "PIN eingeben"
+
+msgid "The saved PIN was cleared."
+msgstr "Die PIN wurde zurückgesetzt."
+
+msgid "Set pin code persistent"
+msgstr "PIN dauerhaft speichern"
+
+msgid "Enter persistent PIN code"
+msgstr "PIN eingeben"
+
+msgid "Reset persistent PIN code"
+msgstr "PIN zurücksetzen"
+
+msgid "Show CI messages"
+msgstr "CI Meldungen anzeigen"
+
+msgid "CIHelper Setup"
+msgstr "CIHelper Einstellungen"
+
+msgid "CIHelper for SLOT CI0"
+msgstr "CIHelper für SLOT CI0"
+
+msgid "CIHelper for SLOT CI1"
+msgstr "CIHelper für SLOT CI1"
+
+msgid "Enable CIHelper for SLOT CI0"
+msgstr "Aktiviere CIHelper für SLOT CI0"
+
+msgid "Enable CIHelper for SLOT CI1"
+msgstr "Aktiviere CIHelper für SLOT CI1"
+
+msgid "Sorry CIHelper Config is Missing"
+msgstr "CIHelper Konfiguration nicht vorhanden."
+
+msgid "Would you save the entered PIN %s persistent?"
+msgstr "Möchten Sie die PIN %s dauerhaft speichern?"
+
+msgid "Set CI assignment for detection of available services."
+msgstr "Ermittlung verf. Kanäle inkl. Berücksichtigung der CI-Zuweisung"
+
+msgid "Include CI assignment"
+msgstr "Berücksichtigung der CI-Zuweisung"

@@ -1,8 +1,9 @@
 from os import path
 
-from enigma import iPlayableService, iServiceInformation, eTimer
+from enigma import iPlayableService, iServiceInformation, eTimer, eServiceCenter, eServiceReference, eDVBDB
 
 from Screens.Screen import Screen
+from Screens.ChannelSelection import FLAG_IS_DEDICATED_3D
 from Components.About import about
 from Components.SystemInfo import SystemInfo
 from Components.ConfigList import ConfigListScreen
@@ -344,11 +345,37 @@ class AutoVideoModeLabel(Screen):
 			idx += 4
 			self.hideTimer.start(idx*1000, True)
 
+previous = None
+isDedicated3D = False
+
+def applySettings(mode=config.osd.threeDmode.value, znorm=int(config.osd.threeDznorm.value)):
+	global previous, isDedicated3D
+	mode = isDedicated3D and mode == "auto" and "sidebyside" or mode
+	if previous != (mode, znorm):
+		try:
+			previous = (mode, znorm)
+			if SystemInfo["CanUse3DModeChoices"]:
+				f = open("/proc/stb/fb/3dmode_choices", "r")
+				choices = f.readlines()[0].split()
+				f.close()
+				if mode not in choices:
+					if mode == "sidebyside":
+						mode = "sbs"
+					elif mode == "topandbottom":
+						mode = "tab"
+					elif mode == "auto":
+						mode = "off"
+			open(SystemInfo["3DMode"], "w").write(mode)
+			open(SystemInfo["3DZNorm"], "w").write('%d' % znorm)
+		except:
+			return
+			
 class AutoVideoMode(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.__event_tracker = ServiceEventTracker(screen=self, eventmap=
 			{
+				iPlayableService.evStart: self.__evStart,
 				iPlayableService.evVideoSizeChanged: self.VideoChanged,
 				iPlayableService.evVideoProgressiveChanged: self.VideoChanged,
 				iPlayableService.evVideoFramerateChanged: self.VideoChanged,
@@ -361,6 +388,28 @@ class AutoVideoMode(Screen):
 		self.detecttimer = eTimer()
 		self.detecttimer.callback.append(self.VideoChangeDetect)
 
+	def checkIfDedicated3D(self):
+			service = self.session.nav.getCurrentlyPlayingServiceReference()
+			servicepath = service and service.getPath()
+			if servicepath and servicepath.startswith("/"):
+					if service.toString().startswith("1:"):
+						info = eServiceCenter.getInstance().info(service)
+						service = info and info.getInfoString(service, iServiceInformation.sServiceref)
+						return service and eDVBDB.getInstance().getFlag(eServiceReference(service)) & FLAG_IS_DEDICATED_3D == FLAG_IS_DEDICATED_3D and "sidebyside"
+					else:
+						return ".3d." in servicepath.lower() and "sidebyside" or ".tab." in servicepath.lower() and "topandbottom"
+			service = self.session.nav.getCurrentService()
+			info = service and service.info()
+			return info and info.getInfo(iServiceInformation.sIsDedicated3D) == 1 and "sidebyside"
+
+	def __evStart(self):
+		if config.osd.threeDmode.value == "auto":
+			global isDedicated3D
+			isDedicated3D = self.checkIfDedicated3D()
+			if isDedicated3D:
+				applySettings(isDedicated3D)
+			else:
+				applySettings()
 	def BufferInfo(self):
 		bufferInfo = self.session.nav.getCurrentService().streamed().getBufferCharge()
 		if bufferInfo[0] > 98:
@@ -632,6 +681,22 @@ class AutoVideoMode(Screen):
 								if not changeResolution:
 									print "[VideoMode] setMode - port: %s, mode: 1080p is also not available" % config_port
 									resolutionlabel["restxt"].setText(_("Video mode: 1080p also not available"))
+								else:
+									print "[VideoMode] setMode - port: %s, mode: %s" % (config_port, x)
+									resolutionlabel["restxt"].setText(_("Video mode: %s") % x)
+							if (write_mode == "2160p24") or (write_mode == "2160p30") or (write_mode == "2160p60"):
+								for x in values:
+									if x == "2160p":
+										try:
+											f = open("/proc/stb/video/videomode", "w")
+											f.write(x)
+											f.close()
+											changeResolution = True
+										except Exception, e:
+											print("[VideoMode] write_mode exception:" + str(e))
+								if not changeResolution:
+									print "[VideoMode] setMode - port: %s, mode: 2160p is also not available" % config_port
+									resolutionlabel["restxt"].setText(_("Video mode: 2160p also not available"))
 								else:
 									print "[VideoMode] setMode - port: %s, mode: %s" % (config_port, x)
 									resolutionlabel["restxt"].setText(_("Video mode: %s") % x)
