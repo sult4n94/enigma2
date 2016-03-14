@@ -51,18 +51,18 @@ class ChapterZap(Screen):
 
 	def keyOK(self):
 		self.Timer.stop()
-		self.close(self.field and int(self.field))
+		self.close(int(self["number"].getText()))
 
 	def keyNumberGlobal(self, number):
-		self.Timer.start(3000, True)
-		self.field = self.field + str(number)
+		self.Timer.start(3000, True)		#reset timer
+		self.field += str(number)
 		self["number"].setText(self.field)
 		if len(self.field) >= 4:
 			self.keyOK()
 
-	def __init__(self, session):
+	def __init__(self, session, number):
 		Screen.__init__(self, session)
-		self.field = ""
+		self.field = str(number)
 
 		self["chapter"] = Label(_("Chapter:"))
 
