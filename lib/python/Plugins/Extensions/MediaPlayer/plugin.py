@@ -1101,13 +1101,18 @@ class MediaPlayer(Screen, InfoBarBase, InfoBarScreenSaver, InfoBarSeek, InfoBarA
 	def hotplugCB(self, dev, media_state):
 		if media_state == "audiocd" or media_state == "audiocdadd":
 			self.cdAudioTrackFiles = []
-			list = open("/media/audiocd/cdplaylist.cdpls")
-			if list:
-				self.isAudioCD = True
-				for x in list:
-					xnon = x.replace("\n", "")
-					self.cdAudioTrackFiles.append(xnon)
-				self.playAudioCD()
+			if os.path.isfile('/media/audiocd/cdplaylist.cdpls'):
+				list = open("/media/audiocd/cdplaylist.cdpls")
+				if list:
+					self.isAudioCD = True
+					for x in list:
+						xnon = x.replace("\n", "")
+						self.cdAudioTrackFiles.append(xnon)
+					self.playAudioCD()
+			else:
+				self.cdAudioTrackFiles = []
+				if self.isAudioCD:
+					self.clear_playlist()
 		else:
 			self.cdAudioTrackFiles = []
 			if self.isAudioCD:
