@@ -1785,7 +1785,6 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 			gst_message_parse_error (msg, &err, &debug);
 			g_free (debug);
 			eWarning("Gstreamer error: %s (%i, %i) from %s", err->message, err->code, err->domain, sourceName );
-			eWarning("Gstreamer error: %", gst_get_error_message( err->domain , err->code));
 			if ( err->domain == GST_STREAM_ERROR )
 			{
 				if ( err->code == GST_STREAM_ERROR_CODEC_NOT_FOUND )
