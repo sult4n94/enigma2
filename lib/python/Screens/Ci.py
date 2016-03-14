@@ -4,6 +4,8 @@ from Components.ConfigList import ConfigListScreen
 from Components.ActionMap import ActionMap
 from Components.ActionMap import NumberActionMap
 from Components.Label import Label
+from Components.Pixmap import Pixmap
+from Components.Console import Console
 from Components.Sources.StaticText import StaticText
 from Components.config import config, ConfigSubsection, ConfigSelection, ConfigSubList, getConfigListEntry, KEY_LEFT, KEY_RIGHT, KEY_0, ConfigNothing, ConfigPIN, ConfigText, ConfigYesNo, NoSave
 from Components.ConfigList import ConfigList
@@ -377,7 +379,7 @@ class CiSelection(Screen):
 
 	def selectionChanged(self):
 		cur_idx = self["entries"].getCurrentIndex()
-		self["text"].setText(_("Slot %d")%((cur_idx / 8)+1))
+		self["text"].setText(_("Slot %d")%((cur_idx / 9)+1))
 
 	def keyConfigEntry(self, key):
 		try:

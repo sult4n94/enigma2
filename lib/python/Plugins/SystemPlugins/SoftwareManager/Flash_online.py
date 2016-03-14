@@ -18,13 +18,11 @@ import urllib2
 import os
 import shutil
 import math
-from boxbranding import getBoxType,  getImageDistro, getMachineName, getMachineBrand, getImageVersion
+from boxbranding import getBoxType,  getImageDistro, getMachineName, getMachineBrand, getImageVersion, getMachineKernelFile, getMachineRootFile
 distro =  getImageDistro()
 ImageVersion = getImageVersion()
-
-ImageVersion3 = ''
-if getMachineBrand() == "Vu+":
-	ImageVersion3= os.popen("cat /etc/opkg/mips32el-feed.conf | grep -o -e 4.2gl -e 4.2-old").read().rstrip()
+ROOTFSBIN = getMachineRootFile()
+KERNELBIN = getMachineKernelFile()
 
 #############################################################################################################
 image = 0 # 0=openATV / 1=openMips
@@ -32,14 +30,12 @@ if distro.lower() == "openmips":
 	image = 1
 elif distro.lower() == "openatv":
 	image = 0
-if ImageVersion3 == '':
-	feedurl_atv = 'http://images.mynonpublic.com/openatv/%s' %ImageVersion
-else:
-	feedurl_atv = 'http://images2.mynonpublic.com/openatv/%s' %ImageVersion3
-if ImageVersion == '4.1' or ImageVersion == '4.0' or ImageVersion == '3.0' or ImageVersion == '4.3' or ImageVersion == '5.1':
-	ImageVersion2= '4.2'
-else:
+feedurl_atv = 'http://images.mynonpublic.com/openatv/%s' %ImageVersion
+
+if ImageVersion == '5.2':
 	ImageVersion2= '5.1'
+else:
+	ImageVersion2= '5.2'
 feedurl_atv2= 'http://images.mynonpublic.com/openatv/%s' %ImageVersion2
 feedurl_om = 'http://image.openmips.com/4.3'
 imagePath = '/media/hdd/images'
@@ -444,12 +440,12 @@ class doFlashImage(Screen):
 			for name in files:
 				if name.find('kernel') > -1 and name.endswith('.bin') and kernel:
 					binfile = os.path.join(path, name)
-					dest = flashTmp + '/kernel.bin'
+					dest = flashTmp + '/%s' %KERNELBIN
 					shutil.copyfile(binfile, dest)
 					kernel = False
-				elif name.find('root') > -1 and (name.endswith('.bin') or name.endswith('.jffs2')) and rootfs:
+				elif name.find('root') > -1 and (name.endswith('.bin') or name.endswith('.jffs2') or name.endswith('.bz2')) and rootfs:
 					binfile = os.path.join(path, name)
-					dest = flashTmp + '/rootfs.bin'
+					dest = flashTmp + '/%s' %ROOTFSBIN
 					shutil.copyfile(binfile, dest)
 					rootfs = False
 				elif name.find('uImage') > -1 and kernel:
