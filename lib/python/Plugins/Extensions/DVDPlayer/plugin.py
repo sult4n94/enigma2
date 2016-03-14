@@ -81,9 +81,7 @@ def onPartitionChange(action, partition):
 def menu(menuid, **kwargs):
 	if menuid == "mainmenu":
 		global detected_DVD
-		if config.usage.show_dvdplayer.value:
-			return [(_("DVD Player"), main, "dvd_player", 46)]
-		elif detected_DVD is None or detected_DVD:
+		if detected_DVD is None or detected_DVD:
 			cd = harddiskmanager.getCD()
 			if cd and (os.path.exists(os.path.join(harddiskmanager.getAutofsMountpoint(cd), "VIDEO_TS"))
 					or os.path.exists(os.path.join(harddiskmanager.getAutofsMountpoint(cd), "video_ts"))):
