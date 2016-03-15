@@ -6083,8 +6083,8 @@ msgstr ""
 "für jeden Tuner einzeln starten."
 
 #
-msgid "Press OK to select a provider."
-msgstr "OK drücken um einen Provider auszuwählen."
+msgid "Press OK to select a service."
+msgstr "OK drücken um einen Service auszuwählen."
 
 #
 msgid "Press OK to select/deselect a CAId."
@@ -8143,6 +8143,10 @@ msgstr "Sind Sie sicher, dass alle Kabel-Dienste entfernt werden sollen?"
 #: ChannelSelection.py:1176
 msgid "Are you sure to remove all %d.%d%s%s services?"
 msgstr "Sind Sie sicher, dass %d.%d%s%s entfernt werden soll?"
+
+#: ChannelSelection.py:2682
+msgid "Radio Channel Selection"
+msgstr "Radio Kanalliste"
 
 #
 msgid "Mark service as dedicated 3D service"
